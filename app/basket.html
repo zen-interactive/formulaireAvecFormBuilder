@@ -1,0 +1,49 @@
+<div class="container">
+  <form (ngSubmit)="addArticle()" [ngFormModel]="form">
+    <div class="panel panel-primary">
+      <div class="panel-heading">Panier</div>        
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+           <th class="col-sm-4">Article</th>
+           <th class="col-sm-2">Quantité</th>
+           <th class="col-sm-2">Prix</th>
+           <th class="col-sm-2">Total</th>
+           <th class="col-sm-1"></th>
+           <th class="col-sm-1"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let element of panier; let i=index">
+            <td>{{ element.name | uppercase }}</td>
+            <td>{{ element.quantity }}</td> 
+            <td>{{ element.price | number:'1.0-2' | euros }}</td>
+            <td>{{ element.quantity * element.price | number:'1.0-2' | euros }}</td>
+            <td><button class="btn btn-info btn-block" (click)=editArticle(i)><span class="fa fa-edit fa-lg"></span></button></td>
+            <td><button class="btn btn-danger btn-block" (click)=deleteArticle(i)><span class="fa fa-trash-o fa-lg"></span></button></td>
+          </tr> 
+          <tr>
+            <td colspan="3"></td>
+            <td><strong>{{ total | number:'1.0-2' | euros }}</strong></td>
+            <td colspan="2"></td>
+          </tr> 
+          <tr>
+            <td>
+              <input type="text" class="form-control" ngControl="name" placeholder="Nom">
+              <validation-messages [control]="form.controls.name"></validation-messages>
+            </td>
+            <td>
+              <input type="text" class="form-control" ngControl="quantity">
+              <validation-messages [control]="form.controls.quantity"></validation-messages>
+            </td>
+            <td>
+              <input type="text" class="form-control" ngControl="price">
+              <validation-messages [control]="form.controls.price"></validation-messages>
+            </td>
+            <td colspan="3"><button type="submit" [disabled]="!form.valid" class="btn btn-primary btn-block">Ajouter</button></td>
+          </tr>
+        </tbody>       
+      </table>
+    </div> 
+  </form>
+</div>
